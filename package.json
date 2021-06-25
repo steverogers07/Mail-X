@@ -18,6 +18,7 @@
   "homepage": "https://github.com/steverogers07/Flipr-9.0#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "mongoose": "^5.12.14"
+    "mongoose": "^5.12.14",
+    "validator": "^13.6.0"
   }
 }
