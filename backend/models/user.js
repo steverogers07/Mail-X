@@ -2,11 +2,6 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 
 const userSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-        trim: true
-    },
     email: {
         type: String,
         unique: true,
@@ -19,6 +14,13 @@ const userSchema = new mongoose.Schema({
             }
         }
     },
+    username: {
+        type: String,
+        unique: true,
+        required: true,
+        trim: true,
+        lowercase: true
+    },
     password: {
         type: String,
         required: true,
@@ -29,7 +31,11 @@ const userSchema = new mongoose.Schema({
                 throw new Error('Password cannot contain "password" ')
             }
         }
-    }
+    },
+    mails: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Mail'
+    }]
 })
 
 const User = mongoose.model('User', userSchema)
