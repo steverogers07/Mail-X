@@ -5,6 +5,7 @@ import { BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 // Views 
 import Home from './views/Home';
 import Login from './views/Login';
+import SignUp from './views/SignUp';
 
 // Components
 import Header from './components/Header';
@@ -17,6 +18,7 @@ ReactDOM.render(
     <Switch>
       
       <Route path="/login" component={Login} />
+      <Route path="/register" component={SignUp} />
       <Route path="/home" component={Home} />
       <Redirect from="/" to="/home"/>
     </Switch>
