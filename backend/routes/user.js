@@ -3,6 +3,37 @@ var router   = express.Router();
 var User     = require("../models/user");
 var auth = require('../middleware/auth')
 
+
+// Show future mails
+router.get('/future', auth, async(req, res) => {
+    User.findById(req.user._id).populate("mails").exec(function(err, foundUser){
+		if(err) {
+			console.log(err);
+		} else {
+			console.log(foundUser);
+            var allEnabledMails = []
+            foundUser.mails.forEach(function(mail) {
+                if(mail.enabled==true) allEnabledMails.push(mail)
+            })
+            res.send({allEnabledMails})
+        }
+	});
+})
+
+
+// Show History
+router.get('/history', auth, async (req, res) => {
+    User.findById(req.user._id).populate("mails").exec(function(err, foundUser){
+		if(err) {
+			console.log(err);
+		} else {
+			console.log(foundUser);
+            res.send({foundUser})
+        }
+	});
+})
+
+// Register User
 router.post('/register', async (req, res) => {
     const user = new User(req.body)
 
@@ -15,6 +46,7 @@ router.post('/register', async (req, res) => {
     }
 })
 
+// Login User
 router.post('/login', async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
@@ -25,6 +57,7 @@ router.post('/login', async (req, res) => {
     }
 })
 
+// Logout User
 router.post('/logout', auth, async (req, res) => {
     try {
         req.user.tokens = req.user.tokens.filter((token) => {

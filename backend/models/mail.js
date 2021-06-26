@@ -27,10 +27,11 @@ const mailSchema = new mongoose.Schema({
     subject: {
         type: String,
         trim: true,
+        required: true
     },
     content: {
         type: String,
-        required: true,
+        // required: true,
         trim: true
     },
     enabled: {
@@ -39,14 +40,15 @@ const mailSchema = new mongoose.Schema({
     },
     frequency: {
         type:String,
-        required: true,
+        // required: true,
         enum: ['20', '30', 'weekly', 'monthly', 'yearly']
     },
     count: {
-        type: Number,
-        required: 0
+        type: Number
+        // required: 0
     }
 })
 
 const Mail = mongoose.model('Mail', mailSchema)
+
 module.exports = Mail
