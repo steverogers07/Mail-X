@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import axios from "axios";
+import server from "../api/server";
+import {setCookie, getCookie} from "../api/cookie"
 
 
 class SignUp extends Component {
@@ -21,26 +22,23 @@ class SignUp extends Component {
         });
       }
 
-    // onEmailChange = (event) =>{
-    //   this.setState({email: event.target.value})
-    // };
-    // onUsernameChange = (event) =>{
-    //     this.setState({username: event.target.value})
-    //   };
     onFormSubmit = async (event) =>{
         event.preventDefault();
         const form = event.target;
         const username = form.username.value;
         const email = form.email.value;
         const password = form.password.value;
+        console.log('Cookie in register', getCookie('authtoken'));
         
-        console.log({username, email, password});
-        const res = await axios.post('http://localhost:5000/register', {username, email, password});
-        console.log(res)
-        const body = await res.json();
-        console.log(body);
+        
+        // console.log({username, email, password});
+        const res = await server.post('/register', {username, email, password});
+
+        // Apply setCookie
+        setCookie('authtoken', res.data.token, 30);
     }
     render() { 
+
         return (
             <div>
                  <form  onSubmit={this.onFormSubmit}>
