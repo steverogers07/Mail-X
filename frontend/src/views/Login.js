@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 
 import server from "../api/server";
 import {setCookie} from "../api/cookie"
-// import history from "../history"
+
+// assets
+import "./css/Login.css"
 
 class Login extends Component {
     constructor(props) {
@@ -39,39 +41,25 @@ class Login extends Component {
         }else {
             // Handle error
         }
-
-        // Apply setCookie
         
     }
     render() { 
+
         return (
             <div>
-                 <form  onSubmit={this.onFormSubmit}>
-                        <label>Email </label>
-                        <input 
-                            name ="email"
-                            type="text"
-                            // value={this.state.email}
-                            onChange={this.handleInputChange}
-                        />
-                        {/* <label>Username </label>
-                        <input 
-                            name="username"
-                            type="text"
-                            // value={this.state.username}
-                            onChange={this.handleInputChange}
-                        /> */}
-
-                        <label>Password </label>
-                        <input
-                            name="password" 
-                            type="password"
-                            onChange={this.handleInputChange}
-                        />
-                    <button type="submit">Submit</button>
+                <form onSubmit={this.onFormSubmit}>
+                    <div className="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input name ="email" type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
+                        <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+                    </div>
+                    <div className="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input name ="password" type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"/>
+                    </div>
+                    <button type="submit" className="btn btn-primary">Submit</button>
                 </form>
                 <div>
-                     
                     <Link to='/register'>  Create a new Account</Link>
                 </div>
             </div>

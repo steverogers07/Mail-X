@@ -11,7 +11,7 @@ router.get('/future', auth, async(req, res) => {
 		if(err) {
 			console.log(err);
 		} else {
-			console.log(foundUser);
+			// console.log(foundUser);
             var allEnabledMails = []
             foundUser.mails.forEach(function(mail) {
                 if(mail.enabled==true) allEnabledMails.push(mail)
@@ -28,7 +28,7 @@ router.get('/history', auth, async (req, res) => {
 		if(err) {
 			console.log(err);
 		} else {
-			console.log(foundUser);
+			// console.log(foundUser);
             res.send({foundUser})
         }
 	});
