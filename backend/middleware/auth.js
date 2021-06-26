@@ -1,13 +1,23 @@
-// all the middleware goes here
-var middlewareObj = {};
+const jwt = require('jsonwebtoken')
+const User = require('../models/user')
 
-middlewareObj.isLoggedIn = function(req, res, next) {
-	if(req.isAuthenticated()) {
-		return next();
-	}
-	// req.flash("error", "You need to be logged in to do that");
-	// res.redirect("/login");
-	res.status(400).send("Error");
+const auth = async (req, res, next) => {
+    try {
+        const token = req.header('Authorization').replace('Bearer ','')
+        const decoded = jwt.verify(token,'thisisit')
+        const user = await User.findOne({ _id: decoded._id, 'tokens.token': token })
+
+        if(!user) {
+            throw new Error()
+        }
+
+        req.token = token
+        req.user = user
+        next()
+    } catch(e) {
+        res.status(401).send({ error: 'Pleasae Authenticate.' })
+    }
+    
 }
 
-module.exports = middlewareObj;
+module.exports = auth
