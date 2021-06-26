@@ -7,9 +7,13 @@ const Localstrategy = require("passport-local")
 const methodOverride = require("method-override")
 const User = require('./models/user')
 const userRoutes = require('./routes/user')
+var cors = require('cors')
+
 
 const app = express()
-const PORT = 3000
+const PORT = 5000
+app.use(cors())
+
 
 app.use(express.json())  // comment
 app.use(methodOverride("_method"));

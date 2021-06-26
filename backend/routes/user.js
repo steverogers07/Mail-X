@@ -29,10 +29,12 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
     // If this function gets called, authentication was successful.
     // `req.user` contains the authenticated user.
     // res.redirect('/users/' + req.user.username);
-    console.log(req.user)
-    console.log(res)
+    // console.log(req.user)
+    // console.log(res)
     const user = req.user;
-    res.status(200).send({user})
+    res.cookie('token', 'testtoken').status(201)
+	// console.log(res.statusCode, res.cookie)
+	res.send({user})
 });
 
 // logout route
