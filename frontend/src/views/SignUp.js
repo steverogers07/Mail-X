@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import server from "../api/server";
 import {setCookie, getCookie} from "../api/cookie"
+import { Link } from 'react-router-dom';
 
 
 class SignUp extends Component {
@@ -10,17 +11,17 @@ class SignUp extends Component {
         this.state = {username: "", email:"", password:""};
     
         this.handleInputChange = this.handleInputChange.bind(this);
-      }
+    }
     
-      handleInputChange(event) {
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
-    
-        this.setState({
-          [name]: value
-        });
-      }
+    handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+        [name]: value
+    });
+    }
 
     onFormSubmit = async (event) =>{
         event.preventDefault();
@@ -34,8 +35,12 @@ class SignUp extends Component {
         // console.log({username, email, password});
         const res = await server.post('/register', {username, email, password});
 
-        // Apply setCookie
-        setCookie('authtoken', res.data.token, 30);
+        if(res.status===200){
+            setCookie('authtoken', res.data.token, 30);
+            this.props.history.push("/home")
+        }else {
+            // Handle error
+        }
     }
     render() { 
 
@@ -65,6 +70,10 @@ class SignUp extends Component {
                         />
                     <button type="submit">Submit</button>
                 </form>
+                <div>
+                    
+                    <Link to='/login'> Already a member?  </Link>
+                </div>
             </div>
           );
     }

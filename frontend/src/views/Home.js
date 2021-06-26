@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import server from "../api/server"
+// import server from "../api/server"
 
 class Home extends Component {
   state = {  }
   // componentDidMount = async ()=> {
-  //   const res = await server.get('/test');
+  //   const res = await server.get('/history');
   //   console.log('Response: ',res)
   // }
   // showList = async(mails) =>{

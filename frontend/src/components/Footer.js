@@ -4,9 +4,14 @@ class Footer extends Component {
     state = {  }
     render() { 
         return ( 
-            <div>
-                Made by DSA
-            </div>
+                <footer className="page-footer font-small blue fixed-bottom">
+
+                <div className="footer-copyright text-center py-3">© 2021 Copyright:
+                    <a href="/"> DSA Corp.</a>
+                </div>
+
+                </footer>
+ 
          );
     }
 }
