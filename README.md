@@ -22,3 +22,16 @@ Deployed on Heroku.
   3.To run:
     
     npm run dev
+
+
+# Running Frontend
+
+## Build and run
+    
+  1.To install all the dependencies, enter command:
+    
+    npm install
+    
+  2.To run:
+    
+    npm start
