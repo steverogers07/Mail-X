@@ -8,6 +8,8 @@ const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
 
+const cron = require('node-cron')
+
 const createTransporter = async () => {
     const oauth2Client = new OAuth2(
         process.env.CLIENT_ID,
@@ -49,6 +51,9 @@ const sendEmail = async (emailOptions) => {
 };
 
 
+const jobs = {};
+
+
 router.post('/mail', auth, async (req,res) => {
     const mail = new Mail ({
         ...req.body
@@ -56,13 +61,25 @@ router.post('/mail', auth, async (req,res) => {
     
     try {
         await mail.save()
-        sendEmail({
-            subject: mail["subject"],
-            text: mail["content"],
-            to: mail["toAddress"],
-            cc: mail["ccAddress"],
-            from: process.env.EMAIL
-        })
+        jobs[mail._id] = cron.schedule('* * * * *', () => {
+            sendEmail({
+                subject: mail["subject"],
+                text: mail["content"],
+                to: mail["toAddress"],
+                cc: mail["ccAddress"],
+                from: process.env.EMAIL
+            })
+            Mail.findById(mail._id, function(err, email) {
+                if(err) {
+                    return res.send('Mail not found')
+                }
+
+                email["count"] = email["count"] + 1
+                email.save()
+                console.log(email["count"])
+            })
+        });
+        
         User.findById(req.user._id, function(err, user) {
             if(err) {
                 return res.send('User Not Found')
@@ -110,6 +127,29 @@ router.patch('/mail/:id', async (req, res) => {
         }
 
         updates.forEach((update) => mail[update] = req.body[update])
+
+        var my_job = jobs[mail._id]
+        my_job.stop();
+        jobs[mail._id] = cron.schedule('* * * * *', () => {
+            sendEmail({
+                subject: mail["subject"],
+                text: mail["content"],
+                to: mail["toAddress"],
+                cc: mail["ccAddress"],
+                from: process.env.EMAIL
+            })
+            Mail.findById(mail._id, function(err, mail) {
+                if(err) {
+                    return res.send('Mail not found')
+                }
+
+                mail["count"] = mail["count"] + 1
+                mail.save()
+                console.log(mail["count"])
+            })
+            
+        })
+        
         await mail.save()
         res.send(mail)
     } catch(e) {
@@ -126,6 +166,8 @@ router.delete('/mail/:id', async (req, res) =>{
         }
         
         mail["enabled"] = false
+        var my_job = jobs[req.params.id]
+        my_job.stop();
         await mail.save()
         res.send(mail)
     } catch(e) {
