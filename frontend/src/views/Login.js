@@ -6,6 +6,7 @@ import GoogleLogin from 'react-google-login';
 import server from "../api/server";
 import {setCookie} from "../api/cookie"
 
+
 // assets
 import "./css/Login.css"
 
@@ -61,6 +62,22 @@ class Login extends Component {
         console.log('Failure: ', res)
         // this.props.history.push("/login")
     }
+
+    responseSuccessGoogle = async (response) =>{
+        console.log(response)
+       const res = await server.post('/googlelogin', {tokenId: response.tokenId});
+       if(res.status===201){
+            setCookie('authtoken', res.data.token, 30);
+            this.props.history.push("/home")
+        }else {
+            // Handle error
+        }
+    }
+    responseFailureGoogle = async (res) =>{
+        console.log('Failure: ', res)
+        // this.props.history.push("/login")
+    }
+
     render() { 
 
         return (

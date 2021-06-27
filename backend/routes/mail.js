@@ -56,11 +56,46 @@ const jobs = {};
 
 router.post('/mail', auth, async (req,res) => {
     const mail = new Mail ({
-        ...req.body
+        toAddress: req.body.toAddress,
+        ccAddress: req.body.ccAddress,
+        subject: req.body.subject,
+        content: req.body.content,
+        enabled: req.body.enabled
     })
     
     try {
+        var url = ''
+        if(frequency=='minute') {
+            url = '* * * * *'
+        }
+        else if(frequency=='weekly') {
+            const time = req.body.time;
+            minute = time[3]+time[4]
+            hour = time[0]+time[1]
+            url = minute + ' ' + hour +  ' * * ' + req.body.day
+        }
+        else if(frequency=='monthly') {
+            const time = req.body.time;
+            minute = time[3]+time[4]
+            hour = time[0]+time[1]
+            url = minute + ' ' + hour + ' ' + req.body.week + ' * *'
+        }
+        else if(frequency=='yearly') {  
+            const time = req.body.time;
+            minute = time[3]+time[4]
+            hour = time[0]+time[1]
+            url = minute + ' ' + hour + ' ' + req.body.day + ' ' + req.body.month + ' *'
+        }
+        mail["cronURL"] = url
         await mail.save()
+        sendEmail({
+            subject: mail["subject"],
+            text:  mail["content"],
+            to: mail["toAddress"],
+            cc: mail["ccAddress"],
+            from: process.env.EMAIL,
+            html: message
+        })
         jobs[mail._id] = cron.schedule('* * * * *', () => {
             sendEmail({
                 subject: mail["subject"],
@@ -131,10 +166,12 @@ router.patch('/mail/:id', async (req, res) => {
             try{
                 var my_job = jobs[mail._id]
                 my_job.stop();
-            }catch{
-                //
             }
-            jobs[mail._id] = cron.schedule('* * * * *', () => {
+            catch{
+                
+            }
+            
+            jobs[mail._id] = cron.schedule(mail.cronURL, () => {
                 sendEmail({
                     subject: mail["subject"],
                     text: mail["content"],
@@ -153,14 +190,9 @@ router.patch('/mail/:id', async (req, res) => {
                 })
                 
             })
-        }else{
-            try{
-                var my_job = jobs[mail._id]
-                my_job.stop();
-            }catch{
-                //
-            }
-            
+        } else {
+            var my_job = jobs[mail._id]
+            my_job.stop();
         }
         
         await mail.save()

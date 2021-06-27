@@ -7,8 +7,6 @@ const {OAuth2Client} = require('google-auth-library')
 
 const client = new OAuth2Client('747047291644-u1amvc1utafscsca4rhtg8kh0vqa3qg0.apps.googleusercontent.com')
 
-
-
 // Show all mails
 router.get('/allmails', auth, async(req, res) => {
     User.findById(req.user._id).populate("mails").exec(function(err, foundUser){
@@ -47,7 +45,11 @@ router.get('/history', auth, async (req, res) => {
 		if(err) {
 			console.log(err);
 		} else {
-            res.send({foundUser})
+            var allSentMails = []
+            foundUser.mails.forEach(function(mail) {
+                if(mail.count>0) allSentMails.push(mail)
+            })
+            res.send({allSentMails})
         }
 	});
 })
@@ -55,7 +57,7 @@ router.get('/history', auth, async (req, res) => {
 
 
 router.post('/register',  async (req, res) => {
-    console.log('Cookie in register', req.header('Cookie'));
+    // console.log('Cookie in register', req.header('Cookie'));
     const user = new User(req.body)
 
     try {
@@ -97,7 +99,6 @@ router.post('/googlelogin', async (req, res) => {
                 else {
                     const password = email+'thisisit'
                     const username = name.toLowerCase().replace(' ', '')
-                    console.log(password, username)
                     const user = new User({email,username,password})
                     try {
                         await user.save()
@@ -111,6 +112,7 @@ router.post('/googlelogin', async (req, res) => {
         }
     })
 })
+
 // Logout User
 router.post('/logout', auth, async (req, res) => {
     try {
