@@ -62,9 +62,9 @@ class Header extends Component {
                         <li className="nav-item">
                             <Link className="nav-link" to="/newmail">Schedule Mail</Link>
                         </li>
-                        <li className="nav-item">
+                        {/* <li className="nav-item">
                             <Link className="nav-link" to="/testpage">Test</Link>
-                        </li>
+                        </li> */}
 
                         {this.renderRightItems()}
                         </ul>

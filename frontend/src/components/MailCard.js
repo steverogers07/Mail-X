@@ -23,7 +23,7 @@ class MailCard extends Component {
         this.setState({enabled: !this.state.enabled})
     }
     render() {
-        const {_id, ccAddress, toAddress, subject, content, count} = this.props
+        const {_id, ccAddress, toAddress, subject, content, count, frequency} = this.props
         const enabled = this.state.enabled
         const deleted = this.state.deleted
         return ( 
@@ -35,7 +35,7 @@ class MailCard extends Component {
                         <h3 style={{color:'#053742'}}>{subject}</h3>
                         <h6 className="card-text" style={{color:'#4B778D'}}>To: {toAddress.map(add=> <span key={add}>{add},</span>)}</h6>
                         <h6 className="card-text" style={{color:'#4B778D'}}>CC: {ccAddress.map(add=> <span key={add}>{add},</span>)}</h6>
-                        <p className="card-text"  style={{color:'#343F56'}}>Frequency: <strong>Weekly</strong></p>
+                        <p className="card-text"  style={{color:'#343F56'}}>Frequency: <strong>{frequency}</strong></p>
                         <p className="card-text"  style={{color:'#343F56'}}>Count: <strong>{count}</strong></p>
                             <button onClick={this.handleEnabel}  style={{display: "inline"}} className={`btn btn-${enabled?"success":"danger"}`}>
                                 {enabled?"Enabled":"Disabled"}

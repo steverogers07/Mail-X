@@ -6,10 +6,10 @@ var cors = require('cors')
 
 
 const app = express()
-const PORT = 3000
+const PORT = 5000
 
 
-app.use(cors({credentials: true, origin: 'http://localhost:3000'})); 
+app.use(cors({credentials: true, origin: process.env.CLIENT_SERVER})); 
    
 app.use(express.json())  // To parse into JSON
 

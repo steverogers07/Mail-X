@@ -60,9 +60,10 @@ router.post('/mail', auth, async (req,res) => {
         ccAddress: req.body.ccAddress,
         subject: req.body.subject,
         content: req.body.content,
-        enabled: req.body.enabled
+        enabled: req.body.enabled,
+        frequency: req.body.frequency
     })
-    
+    const frequency = req.body.frequency
     try {
         var url = ''
         if(frequency=='minute') {
@@ -74,7 +75,7 @@ router.post('/mail', auth, async (req,res) => {
             hour = time[0]+time[1]
             url = minute + ' ' + hour +  ' * * ' + req.body.day
         }
-        else if(frequency=='monthly') {
+        else if(frequency=='monthl') {
             const time = req.body.time;
             minute = time[3]+time[4]
             hour = time[0]+time[1]
@@ -87,16 +88,19 @@ router.post('/mail', auth, async (req,res) => {
             url = minute + ' ' + hour + ' ' + req.body.day + ' ' + req.body.month + ' *'
         }
         mail["cronURL"] = url
+        // console.log(url)
         await mail.save()
+        // console.log('after save')
         sendEmail({
             subject: mail["subject"],
             text:  mail["content"],
             to: mail["toAddress"],
             cc: mail["ccAddress"],
-            from: process.env.EMAIL,
-            html: message
+            from: process.env.EMAIL
+            // html: message
         })
-        jobs[mail._id] = cron.schedule('* * * * *', () => {
+        // console.log('after save')
+        jobs[mail._id] = cron.schedule(mail.cronURL, () => {
             sendEmail({
                 subject: mail["subject"],
                 text: mail["content"],
@@ -114,7 +118,7 @@ router.post('/mail', auth, async (req,res) => {
                 console.log(email["count"])
             })
         });
-        
+        // console.log('118')
         User.findById(req.user._id, function(err, user) {
             if(err) {
                 return res.send('User Not Found')

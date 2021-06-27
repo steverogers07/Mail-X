@@ -10,7 +10,7 @@ import SignUp from '../views/SignUp';
 import Mails from '../views/Mails';
 import NewMail from '../views/NewMail';
 import UpdateMail from '../views/UpdateMail';
-import TestPage from '../views/TestPage';
+// import TestPage from '../views/TestPage';
 
 class AppWrapper extends Component{
   render(){
@@ -33,7 +33,7 @@ class AppWrapper extends Component{
        <Route path='/allmails' exact component={Mails} />
        <Route path='/newmail' exact component={NewMail} />
        <Route path='/updatemail/:id' exact component={UpdateMail} />
-       <Route path='/testpage' exact component={TestPage}/>
+       {/* <Route path='/testpage' exact component={TestPage}/> */}
         {/* Other Protected Routes... */}
        <Redirect path="/" to="/home" />
      </Switch>
