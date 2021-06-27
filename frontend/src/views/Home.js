@@ -23,7 +23,7 @@ class Home extends Component {
     });
     return (
       <div>
-        <h2>Mails List</h2>
+        <h1 style={{textAlign:"center", color:"#053742", marginTop:"20px", marginBottom:"20px"}}>Mailing Lists</h1>
         {renderedItems}
       </div>
     );
@@ -34,7 +34,6 @@ class Home extends Component {
   render() { 
     return ( 
       <div>
-        Home
         {this.showMails()}
       </div>
     );

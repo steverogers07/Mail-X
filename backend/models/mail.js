@@ -15,7 +15,6 @@ const mailSchema = new mongoose.Schema({
     }],
     ccAddress: [{
         type: String,
-        required: true,
         trim: true,
         lowercase: true,
         validate(value) {

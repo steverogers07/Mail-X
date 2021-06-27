@@ -42,40 +42,66 @@ class SignUp extends Component {
             // Handle error
         }
     }
-    render() { 
-
+    render() {
+        
         return (
-            <div>
-                 <form  onSubmit={this.onFormSubmit}>
-                        <label>Email </label>
-                        <input 
-                            name ="email"
-                            type="text"
-                            // value={this.state.email}
-                            onChange={this.handleInputChange}
-                        />
-                        <label>Username </label>
-                        <input 
-                            name="username"
-                            type="text"
-                            // value={this.state.username}
-                            onChange={this.handleInputChange}
-                        />
-
-                        <label>Password </label>
-                        <input
-                            name="password" 
-                            type="password"
-                            onChange={this.handleInputChange}
-                        />
-                    <button type="submit">Submit</button>
+            <div style={{width:"300px", marginTop:"5%", marginLeft:"40%"}}>
+                <form onSubmit={this.onFormSubmit}>
+                    <div className="form-group">
+                        <label for="exampleInputEmail1"><h4>Email address</h4></label>
+                        <input name ="email" type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" onChange={this.handleInputChange}/>
+                        <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+                    </div>
+                    <div className="form-group">
+                        <label for="exampleInputEmail1"><h4>Username</h4></label>
+                        <input name ="username" type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Choose a username" onChange={this.handleInputChange}/>
+                    </div>
+                    <div className="form-group">
+                        <label for="exampleInputPassword1"><h4>Password</h4></label>
+                        <input name ="password" type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" onChange={this.handleInputChange}/>
+                    </div>
+                    <button type="submit" className="btn btn-primary">Sign Up</button>
                 </form>
+                <br />
                 <div>
                     
-                    <Link to='/login'> Already a member?  </Link>
+                    <Link to='/login'> Already a member? Login here. </Link>
                 </div>
             </div>
           );
+
+        // return (
+        //     <div>
+        //          <form  onSubmit={this.onFormSubmit}>
+        //                 <label>Email </label>
+        //                 <input 
+        //                     name ="email"
+        //                     type="text"
+        //                     // value={this.state.email}
+        //                     onChange={this.handleInputChange}
+        //                 />
+        //                 <label>Username </label>
+        //                 <input 
+        //                     name="username"
+        //                     type="text"
+        //                     // value={this.state.username}
+        //                     onChange={this.handleInputChange}
+        //                 />
+
+        //                 <label>Password </label>
+        //                 <input
+        //                     name="password" 
+        //                     type="password"
+        //                     onChange={this.handleInputChange}
+        //                 />
+        //             <button type="submit">Submit</button>
+        //         </form>
+        //         <div>
+                    
+        //             <Link to='/login'> Already a member?  </Link>
+        //         </div>
+        //     </div>
+        //   );
     }
 }
  

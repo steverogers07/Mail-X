@@ -4,7 +4,7 @@ class History extends Component {
     state = {  }
     render() { 
         return ( <div>
-            History Page
+            <h1 style={{textAlign:"center", color:"#053742", marginTop:"20px", marginBottom:"20px"}}>Mails Sent</h1>
         </div> );
     }
 }

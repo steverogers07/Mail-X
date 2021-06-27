@@ -48,7 +48,7 @@ class NewMail extends Component {
 
         return (
             <div>
-                <form onSubmit={this.onFormSubmit}>
+                <form onSubmit={this.onFormSubmit} style={{width:"700px", marginTop:"5%", marginLeft:"25%"}}>
                     <div className="form-group">
                         <label for="to">To:</label>
                         <input name ="toAddress" type="text" className="form-control" id="to" placeholder="example@gmail.com"/>

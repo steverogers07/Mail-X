@@ -6,7 +6,7 @@ class Footer extends Component {
         return ( 
                 <footer className="page-footer font-small blue fixed-bottom">
 
-                <div className="footer-copyright text-center py-3">© 2021 Copyright:
+                <div className="footer-copyright text-center py-3">© 2021
                     <a href="/"> DSA Corp.</a>
                 </div>
 

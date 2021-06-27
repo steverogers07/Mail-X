@@ -115,7 +115,7 @@ router.patch('/mail/:id', async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['toAddress', 'ccAddress','subject','content','enabled','frequency']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
-
+    console.log(req.body);
     if(!isValidOperation) {
         return res.status(400).send({error: 'Invalid Update'})
     }

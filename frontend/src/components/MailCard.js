@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import "./../views/css/Login.css"
+import "./../views/css/internal.css"
 
 // Api
 import server from "../api/server"
@@ -19,18 +21,17 @@ class MailCard extends Component {
         // this.props.enabled = this.state.enabled
         this.setState({enabled: !this.state.enabled})
     }
-    render() { 
+    render() {
         const {_id, ccAddress, toAddress, subject, content, count} = this.props
         const enabled = this.state.enabled
         const deleted = this.state.deleted
         return ( 
-            <ul key={_id} className="list-group">
+                <ul key={_id} className="list-group" style={{borderBottom: "none"}}>
                 <li className="list-group-item">
-                <div className="card" style={{backgroundColor:"#D8E3E7", width: '80%'}}>
+                <div className="card" style={{backgroundColor:"#F8EDED", width: '80%',marginLeft:"10%", paddingLeft:"50px", paddingRight:"50px"}}>
                     <div className="card-body">
                         <p>Created on: 24 June, 2021</p>
-                        <h3 style={{color:'#126E82'}}>{subject}</h3>
-                        <hr/>
+                        <h3 style={{color:'#053742'}}>{subject}</h3>
                         <h6 className="card-text" style={{color:'#4B778D'}}>To: {toAddress.map(add=> <span key={add}>{add},</span>)}</h6>
                         <h6 className="card-text" style={{color:'#4B778D'}}>CC: {ccAddress.map(add=> <span key={add}>{add},</span>)}</h6>
                         <p className="card-text"  style={{color:'#343F56'}}>Frequency: <strong>Weekly</strong></p>
@@ -39,14 +40,14 @@ class MailCard extends Component {
                                 {enabled?"Enabled":"Disabled"}
                             </button>
                         <div style={{display: 'inline', marginLeft:"75%"}} className="card-button">
-                            <Link to={`/updatemail/${_id}`} className="btn btn-primary">Update</Link>
+                                <Link to={`/updatemail/${_id}`} style={{marginRight:"10px"}}className="btn btn-primary">Update</Link>
                             {!deleted?<button onClick={this.submitDelete} className="btn btn-danger">Delete</button>:null}
                         </div>
                     </div>
                 </div>
                 </li>
             </ul>
-        );
+                );
     }
 }
  

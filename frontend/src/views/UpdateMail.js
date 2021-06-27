@@ -47,7 +47,7 @@ class UpdateMail extends Component {
         // const id = this.props.match.params.id //"60d70bcbe8e07747b81e2035"
         // console.log({username, email, password});
         const res = await server.patch(`/mail/${_id}`, {toAddress, ccAddress, subject, content, enabled});
-        // console.log('Response: ', res)
+        console.log('Response: ', res)
         if(res.status===200){
             this.props.history.push("/home")
         }else {

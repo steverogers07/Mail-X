@@ -46,21 +46,22 @@ class Login extends Component {
     render() { 
 
         return (
-            <div>
+            <div style={{width:"300px", marginTop:"5%", marginLeft:"40%"}}>
                 <form onSubmit={this.onFormSubmit}>
                     <div className="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
+                        <label for="exampleInputEmail1"><h4>Email address</h4></label>
                         <input name ="email" type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
                         <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
                     </div>
                     <div className="form-group">
-                        <label for="exampleInputPassword1">Password</label>
+                        <label for="exampleInputPassword1"><h4>Password</h4></label>
                         <input name ="password" type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"/>
                     </div>
-                    <button type="submit" className="btn btn-primary">Submit</button>
+                    <button type="submit" className="btn btn-primary">Log In</button>
                 </form>
+                <br/>
                 <div>
-                    <Link to='/register'>  Create a new Account</Link>
+                    <Link to='/register'>  Don't have an account? Create a new one.</Link>
                 </div>
             </div>
           );
