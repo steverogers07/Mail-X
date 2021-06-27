@@ -11,7 +11,10 @@ router.get('/allmails', auth, async(req, res) => {
 		if(err) {
 			console.log(err);
 		} else {
-            const allMails = foundUser["mails"]
+            var allMails = []
+            foundUser.mails.forEach(function(mail) {
+                if(!mail.deleted) allMails.push(mail)
+            })
             res.send({allMails})
         }
 	});

@@ -127,28 +127,30 @@ router.patch('/mail/:id', async (req, res) => {
         }
 
         updates.forEach((update) => mail[update] = req.body[update])
+        if(mail.enabled){
+            var my_job = jobs[mail._id]
+            my_job.stop();
+            jobs[mail._id] = cron.schedule('* * * * *', () => {
+                sendEmail({
+                    subject: mail["subject"],
+                    text: mail["content"],
+                    to: mail["toAddress"],
+                    cc: mail["ccAddress"],
+                    from: process.env.EMAIL
+                })
+                Mail.findById(mail._id, function(err, mail) {
+                    if(err) {
+                        return res.send('Mail not found')
+                    }
 
-        var my_job = jobs[mail._id]
-        my_job.stop();
-        jobs[mail._id] = cron.schedule('* * * * *', () => {
-            sendEmail({
-                subject: mail["subject"],
-                text: mail["content"],
-                to: mail["toAddress"],
-                cc: mail["ccAddress"],
-                from: process.env.EMAIL
+                    mail["count"] = mail["count"] + 1
+                    mail.save()
+                    console.log(mail["count"])
+                })
+                
             })
-            Mail.findById(mail._id, function(err, mail) {
-                if(err) {
-                    return res.send('Mail not found')
-                }
-
-                mail["count"] = mail["count"] + 1
-                mail.save()
-                console.log(mail["count"])
-            })
-            
-        })
+        }
+        
         
         await mail.save()
         res.send(mail)
@@ -164,10 +166,13 @@ router.delete('/mail/:id', async (req, res) =>{
         if(!mail) {
             return res.status(404).send()
         }
-        
+        // console.log(mail, req.params)
         mail["enabled"] = false
+        mail["deleted"] = true
         var my_job = jobs[req.params.id]
+        // console.log(my_job)
         my_job.stop();
+        // console.log(mail)
         await mail.save()
         res.send(mail)
     } catch(e) {

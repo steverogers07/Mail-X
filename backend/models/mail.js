@@ -38,6 +38,10 @@ const mailSchema = new mongoose.Schema({
         type: Boolean,
         required: true
     },
+    deleted: {
+        type: Boolean,
+        default: false
+    },
     frequency: {
         type:String,
         // required: true,
@@ -47,7 +51,11 @@ const mailSchema = new mongoose.Schema({
         type: Number,
         default: 0
     }
-})
+}, 
+    {
+        timestamp: true
+    }
+)
 
 const Mail = mongoose.model('Mail', mailSchema)
 

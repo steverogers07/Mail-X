@@ -9,10 +9,10 @@ import MailCard from "../components/MailCard"
 class Mails extends Component {
   state = { mails: [] }
   componentDidMount = async ()=> {
-    const res = await server.get('/future');
+    const res = await server.get('/allmails');
     // console.log(res.data)
-    const allEnabledMails = res.data.allEnabledMails;
-    this.setState({mails:allEnabledMails});
+    const allMails = res.data.allMails;
+    this.setState({mails:allMails});
     // console.log('State: ', this.state)
   }
   showMails = () =>{

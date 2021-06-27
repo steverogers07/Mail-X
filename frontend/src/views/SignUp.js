@@ -35,7 +35,7 @@ class SignUp extends Component {
         // console.log({username, email, password});
         const res = await server.post('/register', {username, email, password});
 
-        if(res.status===200){
+        if(res.status===201){
             setCookie('authtoken', res.data.token, 30);
             this.props.history.push("/home")
         }else {

@@ -59,7 +59,7 @@ class UpdateMail extends Component {
         if(this.state.loading){
             return <div>Loading...</div>
         }
-        const {_id, ccAddress, toAddress, subject, enabled} = this.state
+        const {_id, ccAddress, toAddress, subject, enabled, content} = this.state
         return (
             <div id={_id}>
                 <form onSubmit={this.onFormSubmit}>
@@ -94,7 +94,7 @@ class UpdateMail extends Component {
                         <label htmlFor="content">Body</label>
                         <input name ="content" type="text" className="form-control"
                          id="content"  placeholder="Body"
-                         value={"Hard Coded Content"}
+                         value={content}
                          onChange={this.handleInputChange}
                          />
                         {/* <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
