@@ -15,8 +15,9 @@ class MailCard extends Component {
     }
     handleEnabel = async () => {
         // console.log(this.state.enabled)
-        await server.patch(`/mail/${this.props._id}`, {enabled:!this.state.enabled})
+        const res = await server.patch(`/mail/${this.props._id}`, {enabled:!this.state.enabled})
         // this.props.enabled = this.state.enabled
+        console.log('Response in enable handler: ', res)
         this.setState({enabled: !this.state.enabled})
     }
     render() { 

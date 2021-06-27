@@ -29,7 +29,6 @@ class SignUp extends Component {
         const username = form.username.value;
         const email = form.email.value;
         const password = form.password.value;
-        console.log('Cookie in register', getCookie('authtoken'));
         
         
         // console.log({username, email, password});
@@ -37,6 +36,7 @@ class SignUp extends Component {
 
         if(res.status===201){
             setCookie('authtoken', res.data.token, 30);
+            setCookie('username', username, 30);
             this.props.history.push("/home")
         }else {
             // Handle error
