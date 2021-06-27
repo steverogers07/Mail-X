@@ -31,7 +31,7 @@ const mailSchema = new mongoose.Schema({
     },
     content: {
         type: String,
-        // required: true,
+        required: true,
         trim: true
     },
     enabled: {
@@ -44,8 +44,8 @@ const mailSchema = new mongoose.Schema({
         enum: ['20', '30', 'weekly', 'monthly', 'yearly']
     },
     count: {
-        type: Number
-        // required: 0
+        type: Number,
+        default: 0
     }
 })
 
