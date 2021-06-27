@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import isAuthenticated from "../api/auth";
 import { Link, withRouter } from 'react-router-dom';
-import {deleteCookies} from "../api/cookie"
+import {deleteCookies, getCookie} from "../api/cookie"
 import server from "../api/server";
 import "./../views/css/Login.css"
 
 class Header extends Component {
-    state = {  }
+    state = { username: getCookie('username') }
     logout = async () =>{
         const res = await server.post('/logout')
-        console.log(res)
         deleteCookies()
         this.props.history.push("/login")
     }
@@ -30,7 +29,7 @@ class Header extends Component {
             <div>
                 <li className="nav-item dropdown">
                     <button className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Username
+                        {this.state.username}
                     </button>
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                         <button className="dropdown-item" onClick={this.logout}>Log Out</button>

@@ -44,11 +44,15 @@ const mailSchema = new mongoose.Schema({
     frequency: {
         type:String,
         // required: true,
-        enum: ['20', '30', 'weekly', 'monthly', 'yearly']
+        enum: ['minute', 'weekly', 'monthly', 'yearly']
     },
     count: {
         type: Number,
         default: 0
+    },
+    cronURL: {
+        type: String,
+        default:'* * * * *'
     }
 }, 
     {

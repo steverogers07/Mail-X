@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
 import { Link } from 'react-router-dom';
+import GoogleLogin from 'react-google-login';
 
 import server from "../api/server";
 import {setCookie} from "../api/cookie"
 
+
 // assets
 import "./css/Login.css"
 
+
+const g_id = '747047291644-u1amvc1utafscsca4rhtg8kh0vqa3qg0.apps.googleusercontent.com'
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -37,12 +41,43 @@ class Login extends Component {
         // console.log('Response: ', res)
         if(res.status===200){
             setCookie('authtoken', res.data.token, 30);
+            setCookie('username', res.data.user.username, 30);
             this.props.history.push("/home")
         }else {
             // Handle error
         }
-        
     }
+    responseSuccessGoogle = async (response) =>{
+        // console.log(response)
+       const res = await server.post('/googlelogin', {tokenId: response.tokenId});
+       if(res.status===201){
+            setCookie('authtoken', res.data.token, 30);
+            setCookie('username', res.data.user.username, 30);
+            this.props.history.push("/home")
+        }else {
+            // Handle error
+        }
+    }
+    responseFailureGoogle = async (res) =>{
+        console.log('Failure: ', res)
+        // this.props.history.push("/login")
+    }
+
+    responseSuccessGoogle = async (response) =>{
+        console.log(response)
+       const res = await server.post('/googlelogin', {tokenId: response.tokenId});
+       if(res.status===201){
+            setCookie('authtoken', res.data.token, 30);
+            this.props.history.push("/home")
+        }else {
+            // Handle error
+        }
+    }
+    responseFailureGoogle = async (res) =>{
+        console.log('Failure: ', res)
+        // this.props.history.push("/login")
+    }
+
     render() { 
 
         return (
@@ -60,6 +95,13 @@ class Login extends Component {
                     <button type="submit" className="btn btn-primary">Log In</button>
                 </form>
                 <br/>
+                <GoogleLogin
+                    clientId={g_id}
+                    buttonText="Login"
+                    onSuccess={this.responseSuccessGoogle}
+                    onFailure={this.responseFailureGoogle}
+                    cookiePolicy={'single_host_origin'}
+                />
                 <div>
                     <Link to='/register'>  Don't have an account? Create a new one.</Link>
                 </div>
