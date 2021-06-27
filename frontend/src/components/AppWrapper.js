@@ -7,6 +7,10 @@ import Home from '../views/Home';
 import History from "../views/History";
 import Login from '../views/Login';
 import SignUp from '../views/SignUp';
+import Mails from '../views/Mails';
+import NewMail from '../views/NewMail';
+import UpdateMail from '../views/UpdateMail';
+import TestPage from '../views/TestPage';
 
 class AppWrapper extends Component{
   render(){
@@ -26,6 +30,10 @@ class AppWrapper extends Component{
     <Switch>
        <Route path='/home' exact component={Home} />
        <Route path='/history' exact component={History} />
+       <Route path='/allmails' exact component={Mails} />
+       <Route path='/newmail' exact component={NewMail} />
+       <Route path='/updatemail/:id' exact component={UpdateMail} />
+       <Route path='/testpage' exact component={TestPage}/>
         {/* Other Protected Routes... */}
        <Redirect path="/" to="/home" />
      </Switch>

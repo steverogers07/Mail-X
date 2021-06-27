@@ -8,7 +8,8 @@ import server from "../api/server";
 class Header extends Component {
     state = {  }
     logout = async () =>{
-        await server.post('/logout')
+        const res = await server.post('/logout')
+        console.log(res)
         deleteCookies()
         this.props.history.push("/login")
     }
@@ -32,7 +33,7 @@ class Header extends Component {
                         Username
                     </button>
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <Link className="dropdown-item" to="logout">Action</Link>
+                        <button className="dropdown-item" onClick={this.logout}>Log Out</button>
                     </div>
                 </li>
             </div>
@@ -54,8 +55,18 @@ class Header extends Component {
                             <Link className="nav-link" to="/">Home</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/History">History</Link>
+                            <Link className="nav-link" to="/history">History</Link>
                         </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/allmails">All Mails</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/newmail">Schedule Mail</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/testpage">Test</Link>
+                        </li>
+
                         {this.renderRightItems()}
                         </ul>
                     </div>

@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import server from "../api/server"
 
+
 // Components
 import MailCard from "../components/MailCard"
 
-class Home extends Component {
+
+class Mails extends Component {
   state = { mails: [] }
   componentDidMount = async ()=> {
     const res = await server.get('/future');
     // console.log(res.data)
     const allEnabledMails = res.data.allEnabledMails;
-    // console.log(allEnabledMails)
     this.setState({mails:allEnabledMails});
-    console.log('State: ', this.state)
+    // console.log('State: ', this.state)
   }
   showMails = () =>{
     const renderedItems = this.state.mails.map(mail => {
@@ -28,9 +29,6 @@ class Home extends Component {
       </div>
     );
   }
-
-
-
   render() { 
     return ( 
       <div>
@@ -41,4 +39,4 @@ class Home extends Component {
   }
 }
  
-export default Home;
+export default Mails;
