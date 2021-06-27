@@ -117,7 +117,7 @@ router.patch('/mail/:id', async (req, res) => {
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
     if(!isValidOperation) {
-        return res.status(400).send({error: 'Invalid Update'})
+        return res.status(401).send({error: 'Invalid Update'})
     }
 
     try {
@@ -128,8 +128,12 @@ router.patch('/mail/:id', async (req, res) => {
 
         updates.forEach((update) => mail[update] = req.body[update])
         if(mail.enabled){
-            var my_job = jobs[mail._id]
-            my_job.stop();
+            try{
+                var my_job = jobs[mail._id]
+                my_job.stop();
+            }catch{
+                //
+            }
             jobs[mail._id] = cron.schedule('* * * * *', () => {
                 sendEmail({
                     subject: mail["subject"],
@@ -149,8 +153,15 @@ router.patch('/mail/:id', async (req, res) => {
                 })
                 
             })
+        }else{
+            try{
+                var my_job = jobs[mail._id]
+                my_job.stop();
+            }catch{
+                //
+            }
+            
         }
-        
         
         await mail.save()
         res.send(mail)
