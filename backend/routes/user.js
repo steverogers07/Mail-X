@@ -5,6 +5,18 @@ var User     = require("../models/user");
 var auth = require('../middleware/auth');
 
 
+// Show all mails
+router.get('/allmails', auth, async(req, res) => {
+    User.findById(req.user._id).populate("mails").exec(function(err, foundUser){
+		if(err) {
+			console.log(err);
+		} else {
+            const allMails = foundUser["mails"]
+            res.send({allMails})
+        }
+	});
+})
+
 // Show future mails
 router.get('/future', auth, async(req, res) => {
     User.findById(req.user._id).populate("mails").exec(function(err, foundUser){
@@ -28,18 +40,12 @@ router.get('/history', auth, async (req, res) => {
 		if(err) {
 			console.log(err);
 		} else {
-			// console.log(foundUser);
             res.send({foundUser})
         }
 	});
 })
 
 
-
-router.get('/test',auth,   (req, res)=>{
-    // console.log('In test', req.body,  req.header('Cookie'));
-    res.send('Test')
-})
 
 router.post('/register',  async (req, res) => {
     console.log('Cookie in register', req.header('Cookie'));
