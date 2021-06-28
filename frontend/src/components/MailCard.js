@@ -8,22 +8,22 @@ import server from "../api/server"
 
 class MailCard extends Component {
     state = {enabled: this.props.enabled , deleted: this.props.deleted}
-    componentDidMount() {
-        console.log('Props: ',this.props)
-    }
+    // componentDidMount() {
+    //     console.log('Props: ',this.props)
+    // }
     submitDelete = async () =>{
         await server.delete(`/mail/${this.props._id}`)
         this.setState({enabled: false, deleted: !this.state.deleted})
     }
     handleEnabel = async () => {
         // console.log(this.state.enabled)
-        const res = await server.patch(`/mail/${this.props._id}`, {enabled:!this.state.enabled})
+        await server.patch(`/mail/${this.props._id}`, {enabled:!this.state.enabled})
         // this.props.enabled = this.state.enabled
-        console.log('Response in enable handler: ', res)
+        // console.log('Response in enable handler: ', res)
         this.setState({enabled: !this.state.enabled})
     }
     render() {
-        const {_id, ccAddress, toAddress, subject, content, count, frequency} = this.props
+        const {_id, ccAddress, toAddress, subject, count, frequency} = this.props
         const enabled = this.state.enabled
         const deleted = this.state.deleted
         return ( 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import server from "../api/server";
-import {setCookie, getCookie} from "../api/cookie"
+import {setCookie} from "../api/cookie"
 import { Link } from 'react-router-dom';
 
 
@@ -14,13 +14,13 @@ class SignUp extends Component {
     }
     
     handleInputChange(event) {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
 
-    this.setState({
-        [name]: value
-    });
+        this.setState({
+            [name]: value
+        });
     }
 
     onFormSubmit = async (event) =>{

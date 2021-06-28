@@ -12,7 +12,7 @@ class History extends Component {
     const allSentMails = res.data.allSentMails;
     // console.log(allEnabledMails)
     this.setState({mails:allSentMails});
-    console.log('State: ', this.state)
+    // console.log('State: ', this.state)
   }
   showMails = () =>{
     const renderedItems = this.state.mails.map(mail => {

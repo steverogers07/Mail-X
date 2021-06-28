@@ -8,7 +8,7 @@ import "./../views/css/Login.css"
 class Header extends Component {
     state = { username: getCookie('username') }
     logout = async () =>{
-        const res = await server.post('/logout')
+        await server.post('/logout')
         deleteCookies()
         this.props.history.push("/login")
     }
