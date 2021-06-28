@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import "./../views/css/Login.css"
 import "./../views/css/internal.css"
 
 // Api
-import server from "../api/server"
+// import server from "../api/server"
 
 class HistoryMailCard extends Component {
     state = {enabled: this.props.enabled , deleted: this.props.deleted}
@@ -24,8 +24,8 @@ class HistoryMailCard extends Component {
     // }
     render() {
         const {_id, ccAddress, toAddress, subject, count, frequency, createdAt} = this.props
-        const enabled = this.state.enabled
-        const deleted = this.state.deleted
+        // const enabled = this.state.enabled
+        // const deleted = this.state.deleted
         return ( 
                 <ul key={_id} className="list-group" style={{borderBottom: "none"}}>
                 <li className="list-group-item">

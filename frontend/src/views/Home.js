@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import server from "../api/server"
-import { getCookie } from '../api/cookie';
+// import { getCookie } from '../api/cookie';
 
 // Components
 import MailCard from "../components/MailCard"

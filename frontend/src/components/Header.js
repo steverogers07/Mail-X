@@ -28,9 +28,9 @@ class Header extends Component {
         return (
             <div>
                 <li className="nav-item dropdown">
-                    <button className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {this.state.username}
-                    </button>
+                    </a>
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                         <button className="dropdown-item" onClick={this.logout}>Log Out</button>
                     </div>

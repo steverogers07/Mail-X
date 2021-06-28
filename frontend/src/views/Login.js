@@ -40,7 +40,7 @@ class Login extends Component {
         const res = await server.post('/login', {email, password});
         // console.log('Response: ', res)
         if(res.status===200){
-            setCookie('authtoken', res.data.token, 30);
+            setCookie('authtoken2', res.data.token, 30);
             setCookie('username', res.data.user.username, 30);
             this.props.history.push("/home")
         }else {
@@ -51,7 +51,7 @@ class Login extends Component {
         // console.log(response)
        const res = await server.post('/googlelogin', {tokenId: response.tokenId});
        if(res.status===201){
-            setCookie('authtoken', res.data.token, 30);
+            setCookie('authtoken2', res.data.token, 30);
             setCookie('username', res.data.user.username, 30);
             this.props.history.push("/home")
         }else {
@@ -59,24 +59,11 @@ class Login extends Component {
         }
     }
     responseFailureGoogle = async (res) =>{
-        console.log('Failure: ', res)
+        // console.log('Failure: ', res)
         // this.props.history.push("/login")
     }
 
-    responseSuccessGoogle = async (response) =>{
-        console.log(response)
-       const res = await server.post('/googlelogin', {tokenId: response.tokenId});
-       if(res.status===201){
-            setCookie('authtoken', res.data.token, 30);
-            this.props.history.push("/home")
-        }else {
-            // Handle error
-        }
-    }
-    responseFailureGoogle = async (res) =>{
-        console.log('Failure: ', res)
-        // this.props.history.push("/login")
-    }
+
 
     render() { 
 
@@ -84,12 +71,12 @@ class Login extends Component {
             <div style={{width:"300px", marginTop:"5%", marginLeft:"40%"}}>
                 <form onSubmit={this.onFormSubmit}>
                     <div className="form-group">
-                        <label for="exampleInputEmail1"><h4>Email address</h4></label>
+                        <label htmlFor="exampleInputEmail1"><h4>Email address</h4></label>
                         <input name ="email" type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
                         <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
                     </div>
                     <div className="form-group">
-                        <label for="exampleInputPassword1"><h4>Password</h4></label>
+                        <label htmlFor="exampleInputPassword1"><h4>Password</h4></label>
                         <input name ="password" type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"/>
                     </div>
                     <button type="submit" className="btn btn-primary">Log In</button>
