@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import server from "../api/server"
 
 // Components
-import MailCard from "../components/MailCard"
+import HistoryMailCard from "../components/HistoryMailCard"
 
 class History extends Component {
   state = { mails: [] }
@@ -18,7 +18,7 @@ class History extends Component {
     const renderedItems = this.state.mails.map(mail => {
       return (
         // Use Card Component with props here
-        <MailCard key={mail._id} {...mail} />
+        <HistoryMailCard key={mail._id} {...mail} />
       );
     });
     return (

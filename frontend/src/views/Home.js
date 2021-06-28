@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
 import server from "../api/server"
+import { getCookie } from '../api/cookie';
 
 // Components
 import MailCard from "../components/MailCard"
 
+// {
+//   headers: {
+//       Cookie: `cookie1=${getCookie('authtoken')};`
+//   },
+//   withCredentials:true
+// }
 class Home extends Component {
   state = { mails: [] }
   componentDidMount = async ()=> {
-    const res = await server.get('/future');
+    const res = await server.get('/future' );
     // console.log(res.data)
     const allEnabledMails = res.data.allEnabledMails;
     // console.log(allEnabledMails)
     this.setState({mails:allEnabledMails});
-    console.log('State: ', this.state)
+    // console.log('State: ', this.state)
   }
   showMails = () =>{
     const renderedItems = this.state.mails.map(mail => {

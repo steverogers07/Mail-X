@@ -6,22 +6,22 @@ import "./../views/css/internal.css"
 // Api
 import server from "../api/server"
 
-class MailCard extends Component {
+class HistoryMailCard extends Component {
     state = {enabled: this.props.enabled , deleted: this.props.deleted}
     // componentDidMount() {
     //     console.log('Props: ',this.props)
     // }
-    submitDelete = async () =>{
-        await server.delete(`/mail/${this.props._id}`)
-        this.setState({enabled: false, deleted: !this.state.deleted})
-    }
-    handleEnabel = async () => {
-        // console.log(this.state.enabled)
-        await server.patch(`/mail/${this.props._id}`, {enabled:!this.state.enabled})
-        // this.props.enabled = this.state.enabled
-        // console.log('Response in enable handler: ', res)
-        this.setState({enabled: !this.state.enabled})
-    }
+    // submitDelete = async () =>{
+    //     await server.delete(`/mail/${this.props._id}`)
+    //     this.setState({enabled: false, deleted: !this.state.deleted})
+    // }
+    // handleEnabel = async () => {
+    //     // console.log(this.state.enabled)
+    //     await server.patch(`/mail/${this.props._id}`, {enabled:!this.state.enabled})
+    //     // this.props.enabled = this.state.enabled
+    //     // console.log('Response in enable handler: ', res)
+    //     this.setState({enabled: !this.state.enabled})
+    // }
     render() {
         const {_id, ccAddress, toAddress, subject, count, frequency, createdAt} = this.props
         const enabled = this.state.enabled
@@ -37,13 +37,6 @@ class MailCard extends Component {
                         <h6 className="card-text" style={{color:'#4B778D'}}>CC: {ccAddress.map(add=> <span key={add}>{add},</span>)}</h6>
                         <p className="card-text"  style={{color:'#343F56'}}>Frequency: <strong>{frequency}</strong></p>
                         <p className="card-text"  style={{color:'#343F56'}}>Count: <strong>{count}</strong></p>
-                            <button onClick={this.handleEnabel}  style={{display: "inline"}} className={`btn btn-${enabled?"success":"danger"}`}>
-                                {enabled?"Enabled":"Disabled"}
-                            </button>
-                        <div style={{display: 'inline', marginLeft:"75%"}} className="card-button">
-                                <Link to={`/updatemail/${_id}`} style={{marginRight:"10px"}}className="btn btn-primary">Update</Link>
-                            {!deleted?<button onClick={this.submitDelete} className="btn btn-danger">Delete</button>:null}
-                        </div>
                     </div>
                 </div>
                 </li>
@@ -52,4 +45,4 @@ class MailCard extends Component {
     }
 }
  
-export default MailCard;
+export default HistoryMailCard;
