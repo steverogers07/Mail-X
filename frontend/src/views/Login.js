@@ -5,17 +5,18 @@ import GoogleLogin from 'react-google-login';
 
 import server from "../api/server";
 import {setCookie} from "../api/cookie"
-
+import {g_id} from "../api/auth"
 
 // assets
 import "./css/Login.css"
 
 
-const g_id = '747047291644-u1amvc1utafscsca4rhtg8kh0vqa3qg0.apps.googleusercontent.com'
+
+
 class Login extends Component {
     constructor(props) {
         super(props);
-        this.state = {username: "", email:"", password:""};
+        this.state = {email:"", password:""};
     
         this.handleInputChange = this.handleInputChange.bind(this);
     }
