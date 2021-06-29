@@ -135,22 +135,22 @@ class NewMail extends Component {
                 <form onSubmit={this.onFormSubmit} style={{width:"700px", marginTop:"5%", marginLeft:"25%"}}>
                     <div className="form-group">
                         <label for="to">To:</label>
-                        <input name ="toAddress" type="text" className="form-control" id="to" placeholder="example@gmail.com"/>
-                        {/* <small id="emailHelp" className="form-text text-muted">Please</small> */}
+                        <input name ="toAddress" type="text" className="form-control" id="to" required placeholder="example@gmail.com,example@gmail.com"/>
+                        <small id="emailHelp" className="form-text text-muted">Please give comma seperated mail IDs</small>
                     </div>
                     <div className="form-group">
                         <label for="cc">cc:</label>
-                        <input name ="ccAddress" type="text" className="form-control" id="cc"  placeholder="example@gmail.com"/>
-                        {/* <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
+                        <input name ="ccAddress" type="text" className="form-control" id="cc" required  placeholder="example@gmail.com,example@gmail.com"/>
+                        <small id="emailHelp" className="form-text text-muted">Please give comma seperated mail IDs</small>
                     </div>
                     <div className="form-group">
                         <label for="subject">Subject</label>
-                        <input name ="subject" type="text" className="form-control" id="subject"  placeholder="Subject"/>
+                        <input name ="subject" type="text" className="form-control" id="subject" required placeholder="Subject"/>
                         {/* <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
                     </div>
                     <div className="form-group">
                         <label for="content">Body</label>
-                        <input name ="content" type="text" className="form-control" id="content"  placeholder="Body"/>
+                        <input name ="content" type="text" className="form-control" id="content" required placeholder="Body"/>
                         {/* <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
                     </div>
                     {/* Handling frequency */}

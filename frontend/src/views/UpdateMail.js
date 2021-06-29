@@ -70,7 +70,7 @@ class UpdateMail extends Component {
                          value={toAddress}
                          onChange={this.handleInputChange}
                          />
-                        {/* <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
+                        <small id="emailHelp" className="form-text text-muted">Please give comma seperated mail IDs</small>
                     </div>
                     <div className="form-group">
                         <label htmlFor="cc">cc:</label>
@@ -79,14 +79,14 @@ class UpdateMail extends Component {
                         value={ccAddress}
                         onChange={this.handleInputChange}
                         />
-                        {/* <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
+                       <small id="emailHelp2" className="form-text text-muted">Please give comma seperated mail IDs</small>
                     </div>
                     <div className="form-group">
                         <label htmlFor="subject">Subject</label>
                         <input name ="subject" type="text" className="form-control" 
                         id="subject"  placeholder="Subject"
                         value={subject}
-                         onChange={this.handleInputChange}
+                        onChange={this.handleInputChange}
                         />
                         {/* <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
                     </div>
