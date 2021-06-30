@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route} from "react-router-dom";
+import { HashRouter as Router, Route} from "react-router-dom";
 
 // Views 
 import AppWrapper from "./components/AppWrapper"
@@ -11,10 +11,10 @@ import Footer from './components/Footer';
 
 
 ReactDOM.render(
-  <BrowserRouter>
+  <Router>
     <Header/>
       <Route path="/" component={AppWrapper} />
     <Footer/>
-  </BrowserRouter>,
+  </Router>,
   document.getElementById('root')
 );

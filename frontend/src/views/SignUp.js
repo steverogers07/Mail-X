@@ -4,6 +4,7 @@ import {setCookie} from "../api/cookie"
 import { Link } from 'react-router-dom';
 import GoogleLogin from 'react-google-login';
 import {g_id} from "../api/auth"
+import Notification from '../components/Notification';
 
 
 class SignUp extends Component {
@@ -32,17 +33,21 @@ class SignUp extends Component {
         const email = form.email.value;
         const password = form.password.value;
         
-        
-        // console.log({username, email, password});
-        const res = await server.post('/register', {username, email, password});
+        try{
+            // console.log({username, email, password});
+            const res = await server.post('/register', {username, email, password});
 
-        if(res.status===201){
-            setCookie('authtoken2', res.data.token, 30);
-            setCookie('username', username, 30);
-            this.props.history.push("/home")
-        }else {
-            // Handle error
+            if(res.status===201){
+                setCookie('authtoken2', res.data.token, 30);
+                setCookie('username', username, 30);
+                this.props.history.push("/home")
+            }else {
+                alert('Invalid Email or Email Already registered')
+            }
+        }catch{
+            alert('Server Error')
         }
+        
     }
     responseSuccessGoogle = async (response) =>{
         // console.log(response)
@@ -62,11 +67,12 @@ class SignUp extends Component {
     render() {
         
         return (
+            <>
             <div style={{width:"300px", marginTop:"5%", marginLeft:"40%"}}>
                 <form onSubmit={this.onFormSubmit}>
                     <div className="form-group">
                         <label htmlFor="exampleInputEmail1"><h4>Email address</h4></label>
-                        <input name ="email" type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" onChange={this.handleInputChange}/>
+                        <input name ="email" type="text" className="form-control" id="exampleInputEmail1" required aria-describedby="emailHelp" placeholder="Enter email" onChange={this.handleInputChange}/>
                         <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
                     </div>
                     <div className="form-group">
@@ -75,12 +81,14 @@ class SignUp extends Component {
                     </div>
                     <div className="form-group">
                         <label htmlFor="exampleInputPassword1"><h4>Password</h4></label>
-                        <input name ="password" type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" onChange={this.handleInputChange}/>
+                        <input name ="password" type="password" required className="form-control" id="exampleInputPassword1" placeholder="Password" onChange={this.handleInputChange}/>
+                        <small id="passworHelp" className="form-text text-muted">Password Should be atleast 7 characters.</small>
                     </div>
                     <button type="submit" className="btn btn-primary">Sign Up</button>
                 </form>
                 <br />
                 <div>
+                <Link to='/login'> Already a member? Login here. </Link>
                 <GoogleLogin
                     clientId={g_id}
                     buttonText="Sign up"
@@ -88,9 +96,11 @@ class SignUp extends Component {
                     onFailure={this.responseFailureGoogle}
                     cookiePolicy={'single_host_origin'}
                 />
-                <Link to='/login'> Already a member? Login here. </Link>
+                
                 </div>
             </div>
+            <Notification/>
+            </>
           );
 
         // return (
