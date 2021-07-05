@@ -73,13 +73,13 @@ router.post('/mail', auth, async (req,res) => {
             const time = req.body.time;
             minute = time[3]+time[4]
             hour = time[0]+time[1]
-            url = minute + ' ' + hour +  ' * * ' + req.body.day
+            url = minute + ' ' + hour +  ' * * ' + req.body.week
         }
         else if(frequency=='monthl') {
             const time = req.body.time;
             minute = time[3]+time[4]
             hour = time[0]+time[1]
-            url = minute + ' ' + hour + ' ' + req.body.week + ' * *'
+            url = minute + ' ' + hour + ' ' + req.body.day + ' * *'
         }
         else if(frequency=='yearly') {  
             const time = req.body.time;
@@ -88,18 +88,9 @@ router.post('/mail', auth, async (req,res) => {
             url = minute + ' ' + hour + ' ' + req.body.day + ' ' + req.body.month + ' *'
         }
         mail["cronURL"] = url
-        // console.log(url)
+        
         await mail.save()
-        // console.log('after save')
-        sendEmail({
-            subject: mail["subject"],
-            text:  mail["content"],
-            to: mail["toAddress"],
-            cc: mail["ccAddress"],
-            from: process.env.EMAIL
-            // html: message
-        })
-        // console.log('after save')
+        
         jobs[mail._id] = cron.schedule(mail.cronURL, () => {
             sendEmail({
                 subject: mail["subject"],
@@ -118,7 +109,7 @@ router.post('/mail', auth, async (req,res) => {
                 console.log(email["count"])
             })
         });
-        // console.log('118')
+        
         User.findById(req.user._id, function(err, user) {
             if(err) {
                 return res.send('User Not Found')
@@ -134,7 +125,7 @@ router.post('/mail', auth, async (req,res) => {
 })
 
 
-router.get('/mail/:id', async (req,res) =>{
+router.get('/mail/:id',auth,  async (req,res) =>{
     const _id = req.params.id
 
     try {
@@ -150,11 +141,11 @@ router.get('/mail/:id', async (req,res) =>{
     }
 })
 
-router.patch('/mail/:id', async (req, res) => {
+router.patch('/mail/:id', auth, async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['toAddress', 'ccAddress','subject','content','enabled','frequency']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
-    console.log(req.body);
+    
     if(!isValidOperation) {
         return res.status(401).send({error: 'Invalid Update'})
     }
@@ -162,7 +153,7 @@ router.patch('/mail/:id', async (req, res) => {
     try {
         const mail = await Mail.findOne({ _id: req.params.id})
         if(!mail) {
-            return res.status(404).send()
+            return res.status(404).send({error: "Mail not found"})
         }
 
         updates.forEach((update) => mail[update] = req.body[update])
@@ -172,7 +163,7 @@ router.patch('/mail/:id', async (req, res) => {
                 my_job.stop();
             }
             catch{
-                
+                //
             }
             
             jobs[mail._id] = cron.schedule(mail.cronURL, () => {
@@ -192,38 +183,47 @@ router.patch('/mail/:id', async (req, res) => {
                     mail.save()
                     console.log(mail["count"])
                 })
-                
             })
         } else {
-            var my_job = jobs[mail._id]
-            my_job.stop();
+            try{
+                var my_job = jobs[mail._id]
+                my_job.stop();
+            }catch{
+                //
+            }
         }
         
         await mail.save()
         res.send(mail)
     } catch(e) {
-        res.status(400).send(e)
+        res.status(400).send({error: e})
     }
 })
 
-router.delete('/mail/:id', async (req, res) =>{
+router.delete('/mail/:id', auth,  async (req, res) =>{
+
     try{
         const mail = await Mail.findOne({ _id: req.params.id})
 
         if(!mail) {
-            return res.status(404).send()
+            return res.status(404).send({error: "Mail Doesn't Exist"})
         }
-        // console.log(mail, req.params)
+
         mail["enabled"] = false
         mail["deleted"] = true
-        var my_job = jobs[req.params.id]
-        // console.log(my_job)
-        my_job.stop();
-        // console.log(mail)
+
+        try {
+            var my_job = jobs[req.params.id]
+            my_job.stop();
+        } catch {
+            //
+        }
+
         await mail.save()
         res.send(mail)
+
     } catch(e) {
-        res.status(400).send(e)
+        res.status(400).send({error: 'Error in delete Request'})
     }
 })
 

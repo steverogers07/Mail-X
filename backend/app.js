@@ -6,10 +6,10 @@ var cors = require('cors')
 
 
 const app = express()
-const PORT = 5000
+const PORT = process.env.PORT
 
 
-app.use(cors({credentials: true, origin: process.env.CLIENT_SERVER})); 
+app.use(cors({credentials: true, origin: 'https://mailx.netlify.app', exposedHeaders: ['Cookie']})); 
    
 app.use(express.json())  // To parse into JSON
 

@@ -7,21 +7,21 @@ const mailSchema = new mongoose.Schema({
         required: true,
         trim: true,
         lowercase: true,
-        validate(value) {
-            if(!validator.isEmail(value)) {
-                throw new Error('Email is invalid')
-            }
-        }
+        // validate(value) {
+        //     if(!validator.isEmail(value)) {
+        //         throw new Error('Email is invalid')
+        //     }
+        // }
     }],
     ccAddress: [{
         type: String,
         trim: true,
         lowercase: true,
-        validate(value) {
-            if(!validator.isEmail(value)) {
-                throw new Error('Email is invalid')
-            }
-        }
+        // validate(value) {
+        //     if(!validator.isEmail(value)) {
+        //         throw new Error('Email is invalid')
+        //     }
+        // }
     }],
     subject: {
         type: String,
@@ -43,7 +43,7 @@ const mailSchema = new mongoose.Schema({
     },
     frequency: {
         type:String,
-        // required: true,
+        required: true,
         enum: ['minute', 'weekly', 'monthly', 'yearly']
     },
     count: {
@@ -56,7 +56,7 @@ const mailSchema = new mongoose.Schema({
     }
 }, 
     {
-        timestamp: true
+        timestamps: true
     }
 )
 
