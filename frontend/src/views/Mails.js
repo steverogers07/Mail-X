@@ -14,7 +14,7 @@ class Mails extends Component {
       const res = await server.get('/allmails');
         // console.log(res.data)
       const allMails = res.data.allMails;
-      this.setState({mails:allMails, loading: true});
+      this.setState({mails:allMails, loading: false});
       // console.log('State: ', this.state)
     }catch{
       alert('Unauthorized: Please check , If you have allowed cookies or not!')
